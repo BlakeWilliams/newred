@@ -20,7 +20,7 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function() {
-    fetch("http://www.reddit.com/r/all.json")
+    fetch("http://www.reddit.com/r/askreddit.json")
       .then((response) => response.json())
       .then((json) => {
         const listings = json.data.children;

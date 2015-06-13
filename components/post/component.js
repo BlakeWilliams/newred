@@ -1,5 +1,6 @@
 const React = require('react-native');
 const PostInfo = require("../shared/post-info");
+const HTMLView = require("react-native-htmlview");
 
 const {
   Text,
@@ -14,9 +15,14 @@ module.exports = React.createClass({
     var SelfText;
 
     if (data.selftext) {
+      const html = data.selftext_html
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&amp;/g, "&");
+
       SelfText = (
         <View style={styles.selfTextContainer}>
-          <Text style={styles.selfText}>{data.selftext}</Text>
+          <HTMLView value={html}/>
         </View>
       );
     }
@@ -33,9 +39,6 @@ module.exports = React.createClass({
 const styles = StyleSheet.create({
   selfTextContainer: {
     backgroundColor: "#fefefe",
-  },
-
-  selfText: {
     padding: 15,
-  }
+  },
 });
