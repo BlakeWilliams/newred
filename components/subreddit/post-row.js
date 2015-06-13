@@ -1,67 +1,52 @@
-const React = require('react-native');
+const React = require("react-native");
+const Post = require("../post/component");
+const PostInfo = require("../shared/post-info");
 
 const {
   Image,
   Text,
   StyleSheet,
+  TouchableOpacity,
   View,
+  WebView
 } = React;
 
 module.exports = React.createClass({
   render: function() {
     const data = this.props.rowData.data;
-    var Thumbnail;
-
-    if (data.thumbnail) {
-      Thumbnail = (
-        <Image source={{uri: data.thumbnail}} style={styles.rowImage}/>
-      );
-    }
 
     return (
-      <View style={styles.row}>
-        {Thumbnail}
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>{data.title}</Text>
-          <Text style={styles.meta}>
-            {data.subreddit} - {data.domain} - {data.author}
-          </Text>
+      <TouchableOpacity onPress={this._viewPost}>
+        <View>
+          <PostInfo data={data}/>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   },
-});
 
-const styles = StyleSheet.create({
-  row: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    padding: 10,
-  },
+  _viewPost: function() {
+    const data = this.props.rowData.data;
 
-  rowImage: {
-    borderRadius: 3,
-    height: 50,
-    marginRight: 15,
-    width: 50,
-  },
 
-  textContainer: {
-    flex: 1,
-  },
+    if (data.is_self) {
+      this.props.navigator.push({
+        title: data.title,
+        component: Post,
+        passProps: { data: data},
+      });
+    } else {
+      const webview = React.createClass({
+        render: function() {
+          return <WebView style={{flex: 1}} url={data.url}/>
+        }
+      });
 
-  title: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-
-  meta: {
-    flex: 1,
-    color: '#555',
-    fontSize: 11,
-    marginTop: 5,
+      this.props.navigator.push({
+        title: data.title,
+        component: webview,
+        passProps: { data: data},
+      });
+    }
   },
 });
+

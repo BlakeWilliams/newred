@@ -36,7 +36,7 @@ module.exports = React.createClass({
         <View style={styles.container}>
           <ListView
             dataSource={this.state.dataSource}
-            renderRow={(rowData) => <PostRow rowData={rowData}/>}
+            renderRow={(rowData) => <PostRow rowData={rowData} navigator={this.props.navigator}/>}
           />
         </View>
       );
