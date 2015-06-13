@@ -2,6 +2,7 @@ const React = require('react-native');
 const PostRow = require("./post-row");
 
 var {
+  ActivityIndicatorIOS,
   ListView,
   StyleSheet,
   View,
@@ -9,8 +10,12 @@ var {
 
 module.exports = React.createClass({
   getInitialState: function() {
+    const dataSource = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1.guid !== r2.guid
+    });
+
     return {
-      listings: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
+      dataSource: dataSource.cloneWithRows([]),
     };
   },
 
@@ -18,33 +23,43 @@ module.exports = React.createClass({
     fetch("http://www.reddit.com/r/all.json")
       .then((response) => response.json())
       .then((json) => {
-        const listing = json.data.children;
+        const listings = json.data.children;
         this.setState({
-          listings: this.state.listings.cloneWithRows(json.data.children),
+          dataSource: this.state.dataSource.cloneWithRows(listings),
         });
       }).done();
   },
 
   render: function() {
-    return (
-      <ListView
-        dataSource={this.state.listings}
-        renderRow={(rowData) => <PostRow rowData={rowData}/>}
-        style={styles.listView}
-      />
-    );
+    if (this.state.dataSource.getRowCount() > 0) {
+      return (
+        <View style={styles.container}>
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={(rowData) => <PostRow rowData={rowData}/>}
+          />
+        </View>
+      );
+    } else {
+      return (
+        <ActivityIndicatorIOS
+          animating={true}
+          style={styles.centered}
+          size="large"
+        />
+      );
+    }
   },
 });
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
   },
 
-  instructions: {
-    color: '#333333',
-    marginBottom: 5,
-    textAlign: 'center',
-  },
+  centered: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  }
 });

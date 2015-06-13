@@ -13,7 +13,7 @@ module.exports = React.createClass({
     var Thumbnail;
 
     if (data.thumbnail) {
-      const Thumbnail = (
+      Thumbnail = (
         <Image source={{uri: data.thumbnail}} style={styles.rowImage}/>
       );
     }
