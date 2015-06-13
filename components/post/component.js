@@ -3,6 +3,7 @@ const PostInfo = require("../shared/post-info");
 
 const {
   Text,
+  ScrollView,
   StyleSheet,
   View,
 } = React;
@@ -21,19 +22,15 @@ module.exports = React.createClass({
     }
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <PostInfo data={data}/>
         {SelfText}
-      </View>
+      </ScrollView>
     );
   },
 });
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 70,
-  },
-
   selfTextContainer: {
     backgroundColor: "#fefefe",
   },
