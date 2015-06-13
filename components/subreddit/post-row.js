@@ -21,7 +21,12 @@ module.exports = React.createClass({
     return (
       <View style={styles.row}>
         {Thumbnail}
-        <Text style={styles.rowText}>{data.title}</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{data.title}</Text>
+          <Text style={styles.meta}>
+            {data.subreddit} - {data.domain} - {data.author}
+          </Text>
+        </View>
       </View>
     );
   },
@@ -29,8 +34,9 @@ module.exports = React.createClass({
 
 const styles = StyleSheet.create({
   row: {
-    backgroundColor: '#ffffff',
+    flex: 1,
     flexDirection: 'row',
+    backgroundColor: '#ffffff',
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
     padding: 10,
@@ -43,7 +49,19 @@ const styles = StyleSheet.create({
     width: 50,
   },
 
-  rowText: {
+  textContainer: {
     flex: 1,
+  },
+
+  title: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+
+  meta: {
+    flex: 1,
+    color: '#555',
+    fontSize: 11,
+    marginTop: 5,
   },
 });
