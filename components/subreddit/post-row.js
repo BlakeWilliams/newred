@@ -1,6 +1,7 @@
 const React = require("react-native");
 const Post = require("../post/component");
 const PostInfo = require("../shared/post-info");
+const Icon = require('FAKIconImage');
 
 const {
   Image,
@@ -17,8 +18,18 @@ module.exports = React.createClass({
 
     return (
       <TouchableOpacity onPress={this._viewPost}>
-        <View>
-          <PostInfo data={data}/>
+        <View style={styles.row}>
+          <PostInfo data={data} showCommentIcon={true}/>
+          <TouchableOpacity onPress={this._viewComments}>
+            <View style={styles.iconContainer}>
+              <Icon
+                name='ion|chatboxes'
+                size={28}
+                color='#bbb'
+                style={styles.commentIcon}
+              />
+            </View>
+          </TouchableOpacity>
         </View>
       </TouchableOpacity>
     );
@@ -27,13 +38,8 @@ module.exports = React.createClass({
   _viewPost: function() {
     const data = this.props.rowData.data;
 
-
     if (data.is_self) {
-      this.props.navigator.push({
-        title: data.title,
-        component: Post,
-        passProps: { data: data},
-      });
+      this._viewComments();
     } else {
       const webview = React.createClass({
         render: function() {
@@ -44,9 +50,37 @@ module.exports = React.createClass({
       this.props.navigator.push({
         title: data.title,
         component: webview,
-        passProps: { data: data},
+        passProps: { data: data },
       });
     }
   },
+
+  _viewComments: function() {
+    const data = this.props.rowData.data;
+
+    this.props.navigator.push({
+      title: data.title,
+      component: Post,
+      passProps: { data: data },
+    });
+  },
 });
 
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+
+  iconContainer: {
+    alignSelf: "center",
+    justifyContent: "center",
+    paddingRight: 10,
+  },
+
+  commentIcon: {
+    height: 28,
+    width: 28,
+  },
+});

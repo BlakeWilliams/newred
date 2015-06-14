@@ -15,7 +15,9 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function() {
-    fetch(this.props.data.url + ".json").
+    const url = "http://reddit.com" + this.props.data.permalink + ".json";
+
+    fetch(url).
       then((response) => response.json()).
       then((json) => {
         const comments = json[1].data.children
