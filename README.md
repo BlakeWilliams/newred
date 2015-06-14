@@ -16,6 +16,7 @@ An open source iOS Reddit app built with [React Native].
 
 * Viewing the first page of `r/all`.
 * Visiting links on posts.
+* Viewing self posts, including comments.
 
 ## Todo
 
