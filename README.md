@@ -21,6 +21,6 @@ An open source iOS Reddit app built with [React Native].
 
 * Listing subredddits that can be viewed.
 * Loading more posts on a subreddit.
-* Displaying comments on individual posts.
 * Link to comments for non-self posts.
 * Logging into an account and displaying saved subreddits.
+* Add ability to collapse comment threads.

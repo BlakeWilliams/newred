@@ -12,7 +12,7 @@ module.exports = React.createClass({
     const data = this.props.data;
     var Thumbnail;
 
-    if (data.thumbnail) {
+    if (data.thumbnail && data.thumbnail.startsWith("http")) {
       Thumbnail = (
         <Image source={{uri: data.thumbnail}} style={styles.rowImage}/>
       );

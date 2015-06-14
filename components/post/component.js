@@ -1,9 +1,9 @@
 const React = require('react-native');
-const PostInfo = require("../shared/post-info");
 const HTMLView = require("react-native-htmlview");
+const PostInfo = require("../shared/post-info");
+const Comments = require("./comments");
 
 const {
-  Text,
   ScrollView,
   StyleSheet,
   View,
@@ -31,6 +31,7 @@ module.exports = React.createClass({
       <ScrollView style={styles.container}>
         <PostInfo data={data}/>
         {SelfText}
+        <Comments data={data}/>
       </ScrollView>
     );
   },
@@ -38,7 +39,9 @@ module.exports = React.createClass({
 
 const styles = StyleSheet.create({
   selfTextContainer: {
-    backgroundColor: "#fefefe",
+    backgroundColor: "#fafafe",
+    borderBottomColor: "#ddd",
+    borderBottomWidth: 1,
     padding: 15,
   },
 });
