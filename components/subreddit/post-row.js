@@ -1,7 +1,7 @@
 const React = require("react-native");
+const Icon = require('FAKIconImage');
 const Post = require("../post/component");
 const PostInfo = require("../shared/post-info");
-const Icon = require('FAKIconImage');
 
 const {
   Image,
